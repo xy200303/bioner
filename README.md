@@ -10,7 +10,7 @@
 
 2. 下载并运行主体项目bioner
 
-`docker run --name bioner --network bioner-network -it -p 127.0.0.1:5000:5000 -e SOLR_URL="http://bioner-solr:8983/solr/" xy200303/bioner:latest`
+`docker run --name bioner --network bioner-network --gpus all -it -p 127.0.0.1:5000:5000 -e SOLR_URL="http://bioner-solr:8983/solr/" xy200303/bioner:latest`
 
 3. 下载并启动运行solr服务器
 
