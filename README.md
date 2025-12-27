@@ -54,20 +54,6 @@
 <img src="https://user-images.githubusercontent.com/72864707/120455619-36b05000-c395-11eb-9522-14f3f4117017.png" align="center" width="70%">
 </p>
 
-## CORD-19标注
-所提出的系统将用于一个实际案例：CORD-19语料库的标注，该语料库包含数千篇COVID-19相关文章。为此，语料库将进行预处理，分割成段落，并使用 https://github.com/librairy/cord-19 加载到Solr数据库中。
-为了方便使用此标注功能，推荐使用其容器化版本。此Docker镜像在Docker Hub上的仓库地址为：https://hub.docker.com/r/alvaroalon2/bionlp_cord19_annotation。Docker镜像包含了镜像内的模型。如果不想使用提供的在线Solr数据库端点'http://librairy.linkeddata.es/solr/'，则不应在`docker run`命令中传递环境变量。
-
-### GPU支持
-在具有NVIDIA GPU的Docker容器内进行GPU支持需要https://github.com/NVIDIA/nvidia-docker。运行容器并初始化其标注和归一化的步骤如下：
-1. `docker pull alvaroalon2/bionlp_cord19_annotation:gpu`
-2. `docker run --name annotation -it --gpus all --network 'host' -e SOLR_URL="http://librairy.linkeddata.es/solr/" alvaroalon2/bionlp_cord19_annotation:gpu`
-
-### CPU支持
-如果没有可用的GPU，也可以在CPU上进行部署。标注速度会显著变慢。如果是这种情况，建议使用CPU版本的Docker镜像而不是GPU版本：
-1. `docker pull alvaroalon2/bionlp_cord19_annotation:cpu`
-2. `docker run --name annotation -it --network 'host' -e SOLR_URL="http://librairy.linkeddata.es/solr/" alvaroalon2/bionlp_cord19_annotation:cpu`
-
 ## 模型
 针对每个实体类别（疾病、化学品、遗传物质）提出了一个模型。因此，最终系统由三个模型组成，每个模型负责对其对应的实体类别进行标注。系统会自动检查模型是否已存储在其对应的https://github.com/librairy/bio-ner/tree/master/models 中。如果缺少模型，系统会自动从其对应的Huggingface仓库下载缓存的版本，我们提出的模型已上传至该仓库。以下是所提出模型的仓库地址：
 * 疾病: https://huggingface.co/alvaroalon2/biobert_diseases_ner
